@@ -31,12 +31,18 @@ const ListingSchema = new mongoose.Schema({
           default: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
     },
 
+    
     owner:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
 
     },
-
+    favoritedByUsers: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',   
+        }
+    ],
 
 
 },{timestamps: true})
