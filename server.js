@@ -22,7 +22,9 @@ mongoose.connection.on('connected', () => {
 })
 
 // MIDDLEWARE
+app.use(morgan('dev'))
 app.use(express.urlencoded({ extended: false }))
+app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, "public")))
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -44,6 +46,7 @@ app.use(passUserToView)
 const pagesCtrl = require('./controllers/pages')
 const authCtrl = require('./controllers/auth')
 const vipCtrl = require('./controllers/vip')
+const listingCtrl = require('./controllers/listing.controllers')
 
 // ROUTE HANDLERS
 app.get('/', pagesCtrl.home)
@@ -53,6 +56,20 @@ app.get('/auth/sign-in', authCtrl.signInForm)
 app.post('/auth/sign-in', authCtrl.signIn)
 app.get('/auth/sign-out', authCtrl.signOut)
 app.get('/vip-lounge', isSignedIn, vipCtrl.welcome)
+
+
+app.use(isSignedIn) // muset first sign in to the listing
+
+//LISRTING HANDELERS
+app.get('/listing',listingCtrl.index)
+app.get('/listing/new',listingCtrl.newListing)
+// app.post('/listing',listingCtrl.Createlisting)
+app.post('/listing/:userId',listingCtrl.Createlisting)
+app.get('/listing/:listingId',listingCtrl.show)
+app.delete('/listing/:userId/:listingId',listingCtrl.deleteListing)
+app.get('/listing/:userId/:listingId/edit',listingCtrl.edit)
+app.put('/listing/:userId/:listingId',listingCtrl.update)
+
 
 app.listen(port, () => {
     console.log(`The express app is ready on port ${port}`)

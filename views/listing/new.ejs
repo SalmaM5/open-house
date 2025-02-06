@@ -1,0 +1,24 @@
+<%- include('../partials/head') %>
+
+    <div class="container">
+
+        <h1> Add a new Listing</h1>
+
+        <form action="/listing/<%= user._id %>" method="POST">
+            <label for="">streetAdress:</label>
+             <input type="text" name="streetAdress" id="">
+             <label for="">city:</label>
+            <input type="text" name="city" id="">
+            <label for="">price:</label>
+             <input type="number" name="price" id="">
+             <label for="">size:</label>
+             <input type="number" name="size" id="">
+             <label for="">Image: </label>
+            <input type="text" name="imgUrl">
+
+           <button type="submit">Add Listing</button>
+
+        </form>
+    </div>
+
+<%- include('../partials/footer') %>
